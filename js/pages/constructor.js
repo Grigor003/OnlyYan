@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const LIGHT_SHIRT_COLOR = '#f4f0e8';
     const PRICE_CUSTOM = '18.900 AMD';
     const PRICE_EXCLUSIVE = '16.900 AMD';
+    // ponytail: адрес бэкенда на Render, вставь свой когда задеплоишь
+    const BACKEND_URL = 'PUT_BACKEND_URL_HERE';
 
     const nodes = {
         addTextBtn: document.getElementById('add-text-btn'),
@@ -444,7 +446,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const apiUrl = window.location.protocol.startsWith('http') ? '/api/orders' : 'http://127.0.0.1:5000/api/orders';
+        const apiUrl = BACKEND_URL.includes('PUT_')
+            ? (window.location.protocol.startsWith('http') ? '/api/orders' : 'http://127.0.0.1:5000/api/orders')
+            : `${BACKEND_URL}/api/orders`;
         const text = buildOrderText();
         nodes.orderSummary.textContent = text;
         nodes.orderSummary.classList.remove('is-hidden');

@@ -1,3 +1,4 @@
+import os
 import re
 from datetime import datetime
 
@@ -8,9 +9,9 @@ from flask_sqlalchemy import SQLAlchemy
 from markupsafe import Markup
 
 app = Flask(__name__, static_folder='.', static_url_path='')
-# ponytail: SQLite в одном файле + ключ-заглушка, вынести SECRET_KEY в env когда выйдешь в сеть
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///onlyyan.db'
-app.config['SECRET_KEY'] = 'super-secret-onlyyan-key'
+# ponytail: SQLite в одном файле, SECRET_KEY из env на хостинге
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///onlyyan.db')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-only-key')
 
 db = SQLAlchemy(app)
 
@@ -117,11 +118,12 @@ def _self_check():
 
 with app.app_context():
     db.create_all()
-    _cols = [r[1] for r in db.session.execute(db.text('PRAGMA table_info("order")')).fetchall()]
-    for _col in ('mockup_front', 'mockup_back', 'phone', 'email', 'address'):
-        if _col not in _cols:
-            db.session.execute(db.text(f'ALTER TABLE "order" ADD COLUMN {_col} TEXT DEFAULT ""'))
-    db.session.commit()
+    if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
+        _cols = [r[1] for r in db.session.execute(db.text('PRAGMA table_info("order")')).fetchall()]
+        for _col in ('mockup_front', 'mockup_back', 'phone', 'email', 'address'):
+            if _col not in _cols:
+                db.session.execute(db.text(f'ALTER TABLE "order" ADD COLUMN {_col} TEXT DEFAULT ""'))
+        db.session.commit()
 
 
 if __name__ == '__main__':
@@ -129,4 +131,4 @@ if __name__ == '__main__':
     if '--check' in sys.argv:
         _self_check()
     else:
-        app.run(debug=True, port=5000)
+        app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=not os.environ.get('RENDER'))
