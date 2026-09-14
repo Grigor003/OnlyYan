@@ -1,0 +1,149 @@
+/* --- HOME PAGE STYLES --- */
+.home-page {
+    background: #000;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.home-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.08), transparent 42%),
+        radial-gradient(circle at 84% 74%, rgba(255, 255, 255, 0.06), transparent 38%);
+}
+
+/* --- HEADER --- */
+.home-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.header-left, .header-center, .header-right {
+    flex: 1;
+}
+
+.header-center {
+    text-align: center;
+}
+
+.home-logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-icon {
+    font-size: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #fff;
+    transition: opacity 0.3s;
+}
+
+.menu-icon {
+    text-decoration: none;
+}
+
+.menu-icon:hover {
+    opacity: 0.7;
+}
+
+/* --- SPLIT LAYOUT --- */
+.split-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.split-side {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+    transition: flex 0.5s ease-in-out;
+}
+
+.split-text {
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.left-side {
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.35)),
+        url('../assets/images/hits.jpg')
+        center/cover no-repeat;
+}
+
+.right-side {
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.35)),
+        url('../assets/images/your-design.jpg')
+        center/cover no-repeat;
+}
+
+.split-side:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+}
+
+.split-side::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    transition: background 0.4s ease;
+}
+
+.split-side:hover::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.split-text {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition: transform 0.4s ease;
+}
+
+.split-side:hover .split-text {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .split-container {
+        flex-direction: column;
+    }
+    .home-header {
+        padding: 15px 20px;
+    }
+    .home-logo {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OnlyYan t-shirt builder: add text, upload a logo, choose size and color.">
+    <title>Constructor | OnlyYan</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/constructor.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Armenian:wght@400;700;900&family=Noto+Serif+Armenian:wght@400;700&display=swap">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+</head>
+<body class="constructor-page">
+
+    <header class="shared-header">
+        <a href="hits.html" id="back-link" class="back-link" aria-label="Back to collection">← Back to Collection</a>
+        <a href="index.html" class="logo-small">OnlyYan</a>
+        <div class="header-spacer" aria-hidden="true"></div>
+    </header>
+
+    <div class="constructor-container">
+        <aside class="side-panel" id="left-panel">
+            <div id="standard-tools">
+                <p class="panel-title">Elements</p>
+                <button id="add-text-btn" class="tool-button" type="button">Add Text</button>
+                <button id="add-logo-btn" class="tool-button" type="button">Upload Logo</button>
+                <button id="delete-btn" class="tool-button tool-button--danger" type="button">Delete Element</button>
+                <input type="file" id="logo-upload" class="sr-only" accept="image/*">
+                <label class="panel-title panel-title--spaced" for="text-color">Text Color</label>
+                <select id="text-color">
+                    <option value="#363330">Dark Gray</option>
+                    <option value="#000000">Black</option>
+                    <option value="#ffffff">White</option>
+                    <option value="#a31f26">Red</option>
+                    <option value="#c9a86a">Gold</option>
+                    <option value="#26364c">Navy</option>
+                    <option value="#294535">Green</option>
+                    <option value="#6f2834">Burgundy</option>
+                </select>
+                <label class="panel-title panel-title--spaced" for="text-font">Font</label>
+                <select id="text-font">
+                    <option value="Noto Sans Armenian">Standard</option>
+                    <option value="Noto Serif Armenian">Serif</option>
+                    <option value="Noto Sans Armenian|900">Poster Black</option>
+                </select>
+            </div>
+            <div id="exclusive-tools" class="is-hidden">
+                <div class="exclusive-badge">Exclusive Heritage Drop</div>
+                <p class="exclusive-note">Fixed print only. You can choose color and size.</p>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <p id="constructor-unavailable" class="constructor-unavailable is-hidden" role="alert">The design editor could not load. Check your connection and reload the page.</p>
+            <div class="view-switcher" role="group" aria-label="T-shirt side selection">
+                <button class="view-btn active" data-side="front" type="button" aria-pressed="true">Front</button>
+                <button class="view-btn" data-side="back" type="button" aria-pressed="false">Back</button>
+            </div>
+            <div class="tshirt-side active" id="view-front" role="region" aria-label="Front side">
+                <canvas id="tshirt-canvas-front" class="tshirt-base" width="500" height="500"></canvas>
+                <div class="print-zone"><canvas id="canvas-front" width="250" height="300"></canvas></div>
+            </div>
+            <div class="tshirt-side" id="view-back" role="region" aria-label="Back side">
+                <canvas id="tshirt-canvas-back" class="tshirt-base" width="500" height="500"></canvas>
+                <div class="print-zone"><canvas id="canvas-back" width="250" height="300"></canvas></div>
+            </div>
+        </main>
+
+        <aside class="order-panel">
+            <h1 class="product-name" id="prod-title">Custom Tee</h1>
+            <p class="price">18.900 AMD</p>
+
+            <p class="panel-title">Select size</p>
+            <div class="size-grid" role="radiogroup" aria-label="T-shirt size">
+                <button class="size-btn" data-size="S" type="button" role="radio" aria-checked="false">S</button>
+                <button class="size-btn active" data-size="M" type="button" role="radio" aria-checked="true">M</button>
+                <button class="size-btn" data-size="L" type="button" role="radio" aria-checked="false">L</button>
+                <button class="size-btn" data-size="XL" type="button" role="radio" aria-checked="false">XL</button>
+            </div>
+
+            <p class="panel-title">T-shirt color</p>
+            <div class="colors-flex" role="radiogroup" aria-label="T-shirt color">
+                <button class="color-dot active" type="button" role="radio" aria-checked="true" data-hex="#2b2b2b" aria-label="Charcoal"></button>
+                <button class="color-dot" type="button" role="radio" aria-checked="false" data-hex="#f4f0e8" aria-label="Ecru"></button>
+                <button class="color-dot" type="button" role="radio" aria-checked="false" data-hex="#6f2834" aria-label="Burgundy"></button>
+                <button class="color-dot" type="button" role="radio" aria-checked="false" data-hex="#26364c" aria-label="Slate navy"></button>
+                <button class="color-dot" type="button" role="radio" aria-checked="false" data-hex="#294535" aria-label="Bottle green"></button>
+                <button class="color-dot" type="button" role="radio" aria-checked="false" data-hex="#51372a" aria-label="Dark brown"></button>
+            </div>
+
+            <p class="panel-title">Your contacts</p>
+            <input id="order-phone" class="order-input" type="tel" placeholder="Phone" autocomplete="tel">
+            <input id="order-email" class="order-input" type="email" placeholder="Email" autocomplete="email">
+            <input id="order-address" class="order-input" type="text" placeholder="Delivery address" autocomplete="street-address">
+
+            <p class="panel-title">Order summary</p>
+            <pre id="order-summary" class="order-summary is-hidden" aria-live="polite"></pre>
+            <button id="order-btn" class="buy-button" type="button">Copy Order Details</button>
+            <p id="order-feedback" class="order-feedback" role="status" aria-live="polite"></p>
+        </aside>
+    </div>
+
+    <script src="js/pages/constructor.js"></script>
+
+</body>
+</html>

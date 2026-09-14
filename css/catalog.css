@@ -1,0 +1,123 @@
+.catalog-page {
+    background:
+        radial-gradient(circle at 15% 10%, rgba(201, 168, 106, 0.14), transparent 40%),
+        #f1e7d3;
+    min-height: 100vh;
+}
+
+.catalog-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+}
+
+.catalog-intro {
+    text-align: center;
+    margin-bottom: 44px;
+}
+
+.catalog-intro h1 {
+    font-size: 34px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+}
+
+.catalog-intro p {
+    margin-top: 10px;
+    color: var(--text-gray);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.collection-card {
+    background: #faf2e3;
+    border: 1px solid #ddc9a4;
+    padding: 26px;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    min-height: 280px;
+}
+
+.collection-number {
+    width: 54px;
+    height: 54px;
+    border: 2px solid #c9a86a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono-font);
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.collection-title {
+    font-size: 34px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+}
+
+.theme-list {
+    display: grid;
+    gap: 10px;
+}
+
+.theme-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-main);
+    background: #f3e9d2;
+    border: 1px solid #ddc9a4;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.theme-link:hover {
+    transform: translateY(-2px);
+    background: #e9d5a8;
+}
+
+.theme-id {
+    color: var(--text-gray);
+    font-family: var(--mono-font);
+    font-size: 13px;
+}
+
+@media (max-width: 920px) {
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .catalog-container {
+        padding-top: 40px;
+    }
+
+    .catalog-intro h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 520px) {
+    .collection-card {
+        min-height: 0;
+        padding: 20px;
+    }
+
+    .collection-title {
+        font-size: 28px;
+    }
+}

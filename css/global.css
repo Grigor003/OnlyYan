@@ -1,0 +1,93 @@
+/* --- GLOBAL RESET & TYPOGRAPHY --- */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+
+:root {
+    /* Warm Beige + Gold Palette */
+    --bg-color: #f1e7d3;
+    --panel-bg: #faf2e3;
+    --text-main: #363330;
+    --text-gray: #9E9994;
+    --border-color: #ddc9a4;
+    --button-hover: #ecd9b4;
+    --gold: #c9a86a;
+    --gold-soft: #e8d5ae;
+    --mono-font: 'Courier New', Courier, monospace;
+    --font-main: 'Manrope', 'Inter', sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+a {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Shared Header for Beige Theme (hits, constructor) */
+.shared-header {
+    height: 70px;
+    background-color: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.shared-header .back-link {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.shared-header .back-link:hover {
+    color: var(--text-main);
+}
+
+.shared-header .logo-small {
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: var(--text-main);
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.header-spacer {
+    width: 60px;
+}
