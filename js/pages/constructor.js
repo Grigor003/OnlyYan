@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const PRICE_CUSTOM = '18.900 AMD';
     const PRICE_EXCLUSIVE = '16.900 AMD';
     // ponytail: адрес бэкенда на Render, вставь свой когда задеплоишь
-    const BACKEND_URL = 'PUT_BACKEND_URL_HERE';
+    const BACKEND_URL = 'https://onlyyan.onrender.com';
 
     const nodes = {
         addTextBtn: document.getElementById('add-text-btn'),
