@@ -1,8 +1,9 @@
+import hmac
 import os
 import re
 from datetime import datetime
 
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, Response, jsonify, request, send_from_directory
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_sqlalchemy import SQLAlchemy
@@ -50,6 +51,19 @@ class OrderView(ModelView):
 
 admin = Admin(app, name='OnlyYan Admin', url='/admin')
 admin.add_view(OrderView(Order, db))
+
+
+@app.before_request
+def check_admin_auth():
+    if not request.path.startswith('/admin'):
+        return None
+    # ponytail: простой Basic Auth вместо Flask-Login, его хватит пока админ один
+    auth = request.authorization
+    user = os.environ.get('ADMIN_USER', 'admin')
+    pwd = os.environ.get('ADMIN_PASS', 'onlyyan-admin')
+    if auth and hmac.compare_digest(auth.username or '', user) and hmac.compare_digest(auth.password or '', pwd):
+        return None
+    return Response('Login required', 401, {'WWW-Authenticate': 'Basic realm="OnlyYan"'})
 
 
 @app.after_request
@@ -110,9 +124,17 @@ def static_files(path):
 
 
 def _self_check():
+    import base64
     assert HEX.match('#2b2b2b') and not HEX.match('red')
     assert MAIL.match('a@b.cc') and not MAIL.match('not-mail')
     assert 'M' in SIZES and 'XXL' not in SIZES
+    _u = os.environ.get('ADMIN_USER', 'admin')
+    _p = os.environ.get('ADMIN_PASS', 'onlyyan-admin')
+    with app.test_request_context('/admin'):
+        assert check_admin_auth().status_code == 401
+    _tok = base64.b64encode(f'{_u}:{_p}'.encode()).decode()
+    with app.test_request_context('/admin', headers={'Authorization': f'Basic {_tok}'}):
+        assert check_admin_auth() is None
     print('self-check ok')
 
 
